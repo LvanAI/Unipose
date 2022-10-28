@@ -1,0 +1,53 @@
+# Architecture
+arch: unipose
+backbone: resnet
+#pretrained: src/ckpt/resnet101.ckpt
+pretrained: False
+
+# ===== Dataset ===== #
+data_url: obs://lvan/dataset/LSP/
+set: LSPose
+
+# ===== Learning Rate Policy ======== #
+optimizer: adam
+base_lr: 0.0002
+weight_decay: 0.0005
+momentum: 0.9
+beta: [ 0.9, 0.999 ]
+lr_scheduler: multistep_lr
+lr_gamma: 0.333
+lr_adjust: 40
+milestones: [60,80]
+# for cosine
+# lr_scheduler: cosine_lr
+# warmup_length: 5
+# warmup_lr: 0.000001
+# min_lr: 0.000001
+epochs: 110
+
+# ===== Network training config ===== #
+amp_level: O0
+dataset_size: 1000
+batch_size: 4
+
+sigma: 3
+stride: 1
+output_stride: 8
+numClasses: 14
+
+height: 192
+width: 96
+heatmap_h: 192
+heatmap_w: 96
+
+num_classes: 14
+
+# =======Eval config ========#
+best_epoch: 0
+bestPCK: 0
+bestPCKh: 0
+
+# ===== Hardware setup ===== #
+num_parallel_workers: 16
+device_num: 1
+device_target: Ascend
